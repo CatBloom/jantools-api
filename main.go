@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"github.com/CatBloom/MahjongMasterApi/db"
+	"github.com/CatBloom/MahjongMasterApi/server"
+	"github.com/CatBloom/MahjongMasterApi/service"
+)
 
 func main() {
-	fmt.Printf("Hello world!\n")
+	db.Init()
+	service.NewLeagueService(db.GetDB())
+	defer db.Close()
+	server.Init()
 }
