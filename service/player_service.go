@@ -28,7 +28,7 @@ func (s PlayerService) CreateModel(c *gin.Context) (Player, error) {
 		return u, err
 	}
 
-	if err := db.Create(&u).Error; err != nil {
+	if err := db.Model(&models.Player{}).Create(&u).Error; err != nil {
 		return u, err
 	}
 
