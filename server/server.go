@@ -8,13 +8,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Server struct {
+	league controllers.LeagueController
+	// todo player
+}
+
+func NewServer(
+	league controllers.LeagueController,
+	// todo player
+) Server {
+	return Server{
+		league: league,
+	}
+}
+
 // Init is initialize server
-func Init() {
-	r := router()
+func (s Server) Init() {
+	r := s.router()
 	r.Run()
 }
 
-func router() *gin.Engine {
+func (s Server) router() *gin.Engine {
 	r := gin.Default()
 
 	// Cors
@@ -43,12 +57,11 @@ func router() *gin.Engine {
 
 	l := r.Group("/league")
 	{
-		ctrl := controllers.LeagueController{}
 		// l.GET("", ctrl.Index)
-		l.GET("/:uid", ctrl.Show)
-		l.POST("", ctrl.Create)
-		l.PUT("/:id", ctrl.Update)
-		l.DELETE("/:id", ctrl.Delete)
+		l.GET("/:uid", s.league.Show)
+		l.POST("", s.league.Create)
+		l.PUT("/:id", s.league.Update)
+		l.DELETE("/:id", s.league.Delete)
 	}
 
 	p := r.Group("/player")

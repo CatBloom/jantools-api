@@ -8,12 +8,17 @@ import (
 )
 
 // Controller is league controlller
-type LeagueController struct{}
+type LeagueController struct {
+	s service.LeagueService
+}
+
+func NewLeagueController(s service.LeagueService) *LeagueController {
+	return &LeagueController{s}
+}
 
 // Index action: GET /league
 func (pc LeagueController) Index(c *gin.Context) {
-	var s service.LeagueService
-	p, err := s.GetAll()
+	p, err := pc.s.GetAll()
 
 	if err != nil {
 		c.AbortWithStatus(404)
@@ -25,8 +30,7 @@ func (pc LeagueController) Index(c *gin.Context) {
 
 // Create action: POST /player
 func (pc LeagueController) Create(c *gin.Context) {
-	var s service.LeagueService
-	p, err := s.CreateModel(c)
+	p, err := pc.s.CreateModel(c)
 
 	if err != nil {
 		c.AbortWithStatus(400)
@@ -39,8 +43,7 @@ func (pc LeagueController) Create(c *gin.Context) {
 // Show action: GET /league/:uid
 func (pc LeagueController) Show(c *gin.Context) {
 	uid := c.Params.ByName("uid")
-	var s service.LeagueService
-	p, err := s.GetByUID(uid)
+	p, err := pc.s.GetByUID(uid)
 
 	if err != nil {
 		c.AbortWithStatus(404)
@@ -53,8 +56,7 @@ func (pc LeagueController) Show(c *gin.Context) {
 // Update action: PUT /league/:id
 func (pc LeagueController) Update(c *gin.Context) {
 	id := c.Params.ByName("id")
-	var s service.LeagueService
-	p, err := s.UpdateByID(id, c)
+	p, err := pc.s.UpdateByID(id, c)
 
 	if err != nil {
 		c.AbortWithStatus(400)
@@ -67,9 +69,8 @@ func (pc LeagueController) Update(c *gin.Context) {
 // Delete action: DELETE /league/:id
 func (pc LeagueController) Delete(c *gin.Context) {
 	id := c.Params.ByName("id")
-	var s service.LeagueService
 
-	if err := s.DeleteByID(id); err != nil {
+	if err := pc.s.DeleteByID(id); err != nil {
 		c.AbortWithStatus(403)
 		fmt.Println(err)
 	} else {
