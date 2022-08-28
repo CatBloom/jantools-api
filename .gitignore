@@ -1,1 +1,5 @@
 .vscode
+.env
+tmp
+mahjongmaster.json
+.DS_Store
