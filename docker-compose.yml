@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: fQoO6Bco9SRVC6ow
+      POSTGRES_DB: mahjongmaster
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  go:
+    container_name: goApi
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - 8080:8080
+    command: sleep infinity
+    working_dir: /go/src/work
+    volumes:
+      - .:/go/src/work
+    tty: true
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: ./mahjongmaster.json
+
+volumes:
+  postgres:
