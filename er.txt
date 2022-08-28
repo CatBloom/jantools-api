@@ -1,0 +1,66 @@
+// dbdiagram
+// https://dbdiagram.io/home
+
+Table leagues {
+  id  string [pk]
+  name string
+  manual string
+  start_at string
+  finish_at string
+}
+
+Table rules {
+  id uint  [pk]
+  league_id string 
+  player_count int
+  player_type string
+  tanyao bool
+  back bool
+  dora int
+  start_point int
+  return_point int
+  uma1 int
+  uma2 int
+  uma3 int
+  uma4 int
+  
+}
+
+Table players {
+  id  uint [pk]
+  name string
+  league_id string
+}
+
+Table games {
+  id uint
+  league_id string
+}
+
+Table results {
+  id uint
+  player_id uint
+  rank int
+  point int
+  calc_point int
+  game_id uint
+}
+
+Table admins_leagues{
+  league_id string
+  firebase_uid  uuid
+}
+
+Table games_players{
+  game_id uint
+  player_id uint
+}
+
+
+ref: leagues.id < players.league_id
+ref: leagues.id - rules.league_id
+ref: leagues.id < admins_leagues.league_id
+
+ref: players.id < games_players.player_id
+ref: games.id < games_players.game_id
+ref: games.id < results.game_id
