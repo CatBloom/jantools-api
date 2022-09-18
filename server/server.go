@@ -5,6 +5,7 @@ import (
 
 	"github.com/CatBloom/MahjongMasterApi/controllers"
 	"github.com/CatBloom/MahjongMasterApi/firebase"
+	"github.com/CatBloom/MahjongMasterApi/logger"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -56,6 +57,7 @@ func (s Server) router() *gin.Engine {
 		MaxAge:           24 * time.Hour,
 	}))
 
+	r.Use(logger.Logger())
 	r.Use(gin.Recovery())
 	r.Use(firebase.APIAuthWrap())
 
