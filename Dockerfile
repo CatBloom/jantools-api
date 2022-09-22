@@ -13,3 +13,5 @@ FROM gcr.io/distroless/base-debian11 as deployer
 WORKDIR /go/src/work
 COPY --from=builder /go/src/work/MahjongMasterApi ./
 CMD [ "./MahjongMasterApi" ]
+ENV PORT=${PORT}
+ENTRYPOINT [ "./MahjongMasterApi" ]

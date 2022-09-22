@@ -1,10 +1,11 @@
 package db
 
 import (
+	"database/sql"
 	"os"
 
 	"github.com/CatBloom/MahjongMasterApi/models"
-	"github.com/joho/godotenv"
+	"github.com/lib/pq"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -43,17 +44,32 @@ func autoMigration() {
 		&models.Game{},
 		&models.Result{},
 	)
-	db.AutoMigrate()
 }
 
 func connectDb() *gorm.DB {
-	err := godotenv.Load()
+	// ローカル環境用
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// url := os.Getenv("POSTGRE_CONNECT")
+	url := os.Getenv("DATABASE_URL")
+	connection, err := pq.ParseURL(url)
 	if err != nil {
-		panic(err)
+		panic(err.Error())
 	}
-	DBCONNECT := os.Getenv("POSTGRE_CONNECT")
+	connection += " sslmode=require"
 
-	db, err = gorm.Open(postgres.Open(DBCONNECT), &gorm.Config{})
+	sqlDB, err := sql.Open("postgres", connection)
+	if err != nil {
+		panic("Error loading open postgres")
+	}
+	db, err = gorm.Open(postgres.New(postgres.Config{
+		Conn: sqlDB,
+	}), &gorm.Config{})
+	// ローカル環境用
+	// db, err = gorm.Open(postgres.Open(url), &gorm.Config{})
+
 	if err != nil {
 		panic("Error loading open postgres")
 	}

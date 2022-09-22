@@ -4,10 +4,12 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/gin-gonic/gin"
+	"google.golang.org/api/option"
 )
 
 var (
@@ -16,7 +18,8 @@ var (
 )
 
 func Init() {
-	app, err = firebase.NewApp(context.Background(), nil)
+	opt := option.WithCredentialsJSON([]byte(os.Getenv("GOOGLE_CREDENTIALS")))
+	app, err = firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		log.Fatalf("error initializing app: %v\n", err)
 	}
