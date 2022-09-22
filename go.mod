@@ -6,9 +6,9 @@ require (
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.8.1
 	github.com/google/uuid v1.3.0
-	github.com/joho/godotenv v1.4.0
+	github.com/lib/pq v1.10.2
 	go.uber.org/zap v1.13.0
-	gorm.io/driver/postgres v1.3.7
+	gorm.io/driver/postgres v1.3.5
 	gorm.io/gorm v1.23.6
 )
 
