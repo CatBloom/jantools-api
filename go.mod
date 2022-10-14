@@ -8,6 +8,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/lib/pq v1.10.2
 	go.uber.org/zap v1.13.0
+	google.golang.org/api v0.73.0
 	gorm.io/driver/postgres v1.3.5
 	gorm.io/gorm v1.23.6
 )
@@ -56,7 +57,6 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/tools v0.1.5 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
-	google.golang.org/api v0.73.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/appengine/v2 v2.0.1 // indirect
 	google.golang.org/genproto v0.0.0-20220310185008-1973136f34c6 // indirect
