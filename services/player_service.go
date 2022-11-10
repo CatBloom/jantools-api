@@ -30,7 +30,7 @@ type Player = models.Player
 func (s playerService) GetPlayerList(id string) ([]models.Player, error) {
 	var p []Player
 
-	if err := s.db.Table("players").Where("league_id = ?", id).Order("created_at").Find(&p).Error; err != nil {
+	if err := s.db.Table("players").Where("league_id = ?", id).Order("name ASC, created_at ASC").Find(&p).Error; err != nil {
 		return nil, err
 	}
 
